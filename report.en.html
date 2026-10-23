@@ -5646,7 +5646,9 @@ main h1{font-size:1.45rem}main h2{font-size:1.25rem;margin-top:32px}main h3{font
 <script>
 const T = (() => {
   const strip = /[\u0300-\u036f\u0591-\u05c7\u200e\u200f\u202a-\u202e]/g;
-  const norm = s => s.normalize('NFKD').replace(strip, '').toLowerCase().replace(/\s+/g, ' ').trim();
+  // The Hebrew geresh and the typographic apostrophe count as a typed apostrophe, gershayim as a double quote.
+  const norm = s => s.normalize('NFKD').replace(strip, '').replace(/[\u05f3\u2019]/g, "'").replace(/\u05f4/g, '"')
+    .toLowerCase().replace(/\s+/g, ' ').trim();
   const clean = s => s.replace(/[\u200e\u200f\u202a-\u202e]/g, '').replace(/\s+/g, ' ').trim();
   const esc = s => String(s).replace(/[&<>"]/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;'}[c]));
   function highlight(s, tokens) {
@@ -5686,7 +5688,8 @@ const T = (() => {
       } else if (tag === 'TR') {
         const first = el.cells[0] ? clean(el.cells[0].textContent) : '';
         const text = clean(el.textContent);
-        out.push({type: 'items', label: first, ctx, body: text, text: norm(text), lnorm: norm(first), el});
+        // data-keys holds Hebrew search words for a Latin-script name (data/search-terms.json).
+        out.push({type: 'items', label: first, ctx, body: text, text: norm(text + ' ' + (el.dataset.keys || '')), lnorm: norm(first), el});
       } else {
         if (tag === 'P' && el.closest('li')) return;
         const text = clean(el.textContent);
@@ -5728,7 +5731,7 @@ function sortTables(root, label) {
     const m = s.replace(/(\d),(?=\d{3}\b)/g, '$1').match(/\d+(?:\.\d+)?/);
     return m ? parseFloat(m[0]) : null;
   };
-  const blank = v => v == null || v === '' || v === '—' || v === '-' || v === '–';
+  const blank = v => v == null || v === '' || v === '\u2014' || v === '-' || v === '\u2013';
   root.querySelectorAll('table').forEach(table => {
     const heads = [...table.querySelectorAll('thead th')];
     const body = table.tBodies[0];
