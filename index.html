@@ -11,24 +11,34 @@
 :root{--bg:#f5f2e9;--fg:#213b3a;--muted:#586b68;--card:#fff;--line:#d9e1d9;--accent:#17685f;--on-accent:#fff}
 @media (prefers-color-scheme:dark){:root{--bg:#131f20;--fg:#e6e6e6;--muted:#a3a9b5;--card:#1b2b2b;--line:#354746;--accent:#8dd6c4;--on-accent:#10131a}}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--fg);font:17px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans Hebrew",Arial,sans-serif;
-padding:max(20px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-right)) 32px max(16px,env(safe-area-inset-left))}
-main{max-width:680px;margin:24px auto}
-section{margin:0 0 28px}
-h1{font-family:Georgia,"Noto Serif Hebrew",serif;font-size:2rem;line-height:1.3;margin:0 0 6px}
-p{margin:6px 0 14px;color:var(--muted)}
-a.big{display:block;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px 22px;margin:10px 0;
-color:var(--fg);text-decoration:none}
-a.big b{display:block;font-size:1.1rem;color:var(--accent)}
-a.big span{font-size:.92rem;color:var(--muted)}
-hr{border:0;border-top:1px solid var(--line);margin:24px 0}
-a.big:hover{border-color:var(--accent)}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.65 "Avenir Next","Segoe UI","Noto Sans Hebrew",sans-serif;
+padding:max(20px,env(safe-area-inset-top)) max(20px,env(safe-area-inset-right)) 32px max(20px,env(safe-area-inset-left));
+-webkit-text-size-adjust:100%;text-size-adjust:100%}
+main{max-width:680px;margin:28px auto}
+section{margin:0 0 36px}
+.eyebrow{display:inline-block;color:var(--accent);font-size:12px;font-weight:700;letter-spacing:.04em;margin-bottom:14px;
+border:1px solid var(--line);border-radius:999px;padding:5px 12px;background:var(--card)}
+h1{font-family:Georgia,"Noto Serif Hebrew",serif;font-size:clamp(2rem,6vw,3rem);line-height:1.15;margin:0 0 16px;letter-spacing:-.025em}
+p{margin:6px 0 22px;color:var(--muted);max-width:56ch}
+a.big{position:relative;display:block;background:var(--card);border:1px solid var(--line);border-radius:20px;
+padding:20px 22px;padding-inline-end:52px;margin:12px 0;color:var(--fg);text-decoration:none;transition:transform .15s,border-color .15s}
+a.big::after{content:"←";position:absolute;inset-inline-end:20px;top:22px;font-size:22px;color:var(--accent)}
+[dir="ltr"] a.big::after{content:"→"}
+a.big b{display:block;font-size:1.15rem;color:var(--accent);margin-bottom:5px}
+a.big span{display:block;font-size:.9rem;color:var(--muted)}
+a.big:first-of-type{background:var(--accent);border-color:var(--accent);box-shadow:0 6px 20px rgba(0,0,0,.1)}
+a.big:first-of-type b,a.big:first-of-type span,a.big:first-of-type::after{color:var(--on-accent)}
+hr{border:0;border-top:1px solid var(--line);margin:36px 0}
+@media (hover:hover){a.big:hover{border-color:var(--accent);transform:translateY(-2px)}}
+@media (min-width:760px){main{margin:56px auto}section{padding:12px 0}}
+@media (prefers-reduced-motion:reduce){a.big{transition:none}}
 a:focus-visible{outline:3px solid var(--accent);outline-offset:4px}
 </style>
 </head>
 <body>
 <main>
 <section lang="he" dir="rtl">
+<div class="eyebrow">המלווה שלכם בפארקים</div>
 <h1>דיסנילנד פריז · 1–4 בנובמבר 2026</h1>
 <p>פתחו את הקישורים ב-Safari או ב-Chrome, לא בתצוגה מקדימה. כדי לראות את עצמכם במפה ולנווט, אשרו גישה למיקום כשהדפדפן שואל.</p>
 <a class="big" href="field-guide.he.html"><b>🗺 מדריך שטח</b><span>מפה עם GPS, ניווט הליכה, חיפוש וסינון מקומות, תצוגת יום</span></a>
@@ -36,6 +46,7 @@ a:focus-visible{outline:3px solid var(--accent);outline-offset:4px}
 </section>
 <hr>
 <section lang="en" dir="ltr">
+<div class="eyebrow">YOUR PARK COMPANION</div>
 <h1>Disneyland Paris · 1–4 November 2026</h1>
 <p>Open the links in Safari or Chrome, not in a preview. To see yourself on the map and navigate, allow location when the browser asks.</p>
 <a class="big" href="field-guide.en.html"><b>🗺 Field guide</b><span>Map with GPS, walking navigation, searchable and filterable places, day view</span></a>
