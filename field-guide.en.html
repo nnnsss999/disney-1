@@ -7989,6 +7989,17 @@ $('#toc-g').addEventListener('click', e => { if (e.target.closest('a')) $('#toc-
 renderChips($('#map-chips')); renderChips($('#list-cats')); renderListFilters();
 routePart = autoPart(); planChanged();
 showTab(sharedPlan ? 'day' : TABS.includes(store.get('tab', 'map')) ? store.get('tab', 'map') : 'map');
+// Sibling calendars can open a dated Day tab without changing saved route edits.
+function openDatedDay() {
+  const match = location.hash.match(/^#day=(\d{4}-\d{2}-\d{2})$/);
+  const selected = match ? D.dates.indexOf(match[1]) : -1;
+  if (selected < 0) return false;
+  selectDay(selected);
+  showTab('day');
+  return true;
+}
+openDatedDay();
+addEventListener('hashchange', openDatedDay);
 resizeMap(); drawRoute();
 document.documentElement.classList.remove('no-js');  // the app started: drop the no-script fallback
 // The search row was hidden by the fallback when the header was first measured.
